@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('generatorAngularFullstack2App'));
+  beforeEach(module('generatorAngularFullstackApp'));
 
   var MainCtrl,
     scope,
@@ -21,8 +21,8 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings).toBeUndefined();
+    should.not.exist(scope.awesomeThings);
     $httpBackend.flush();
-    expect(scope.awesomeThings.length).toBe(4);
+    expect(scope.awesomeThings).to.have.length(4);
   });
 });
