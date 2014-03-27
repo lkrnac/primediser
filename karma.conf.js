@@ -9,7 +9,6 @@ module.exports = function (config) {
 
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['requirejs', 'mocha', 'chai', 'sinon'],
-    //frameworks: ['jasmine', 'requirejs'],
 
     // list of files / patterns to load in the browser
     files: [

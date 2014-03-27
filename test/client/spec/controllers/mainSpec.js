@@ -5,7 +5,7 @@ define(['angular', 'angularMocks', 'app'], function () {
 
     // load the controller's module
     beforeEach(module('generatorAngularFullstack2App.controllers.MainCtrl'));
- 
+
     var MainCtrl,
       scope,
       $httpBackend;
@@ -23,12 +23,9 @@ define(['angular', 'angularMocks', 'app'], function () {
     }));
 
     it('should attach a list of awesomeThings to the scope', function () {
-            should.not.exist(scope.awesomeThings);
-            $httpBackend.flush();
-            expect(scope.awesomeThings).to.have.length(4);
-//      expect(scope.awesomeThings).toBeUndefined();
-//      $httpBackend.flush();
-//      expect(scope.awesomeThings.length).toBe(4);
+      should.not.exist(scope.awesomeThings);
+      $httpBackend.flush();
+      expect(scope.awesomeThings).to.have.length(4);
     });
   });
 });

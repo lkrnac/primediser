@@ -40,7 +40,6 @@
     "karma-mocha": "~0.1.3",
     "karma-chai": "latest",
     "karma-sinon": "latest",
-    "karma-jasmine": "~0.1.5",
     "karma-chrome-launcher": "~0.1.2",
     "karma-requirejs": "~0.2.1",
     "karma-coffee-preprocessor": "~0.1.2",
