@@ -80,7 +80,7 @@ module.exports = function (config) {
 
     reporters: ['progress', 'coverage'],
     preprocessors: {
-      '**/*.js': 'coverage'
+      'app/scripts/**/*.js': 'coverage'
     },
 
     // Continuous Integration mode
