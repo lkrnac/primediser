@@ -4,7 +4,7 @@ define(['angular', 'angularMocks', 'app'], function () {
   describe('Controller: MainCtrl', function () {
 
     // load the controller's module
-    beforeEach(module('generatorAngularFullstack2App.controllers.MainCtrl'));
+    beforeEach(module('primediser.controllers.MainCtrl'));
 
     var MainCtrl,
       scope,
