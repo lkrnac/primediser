@@ -1,29 +1,61 @@
 // Karma configuration
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 
-module.exports = function(config) {
+module.exports = function (config) {
+  'use strict';
   config.set({
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['requirejs', 'mocha', 'chai', 'sinon'],
+    //frameworks: ['jasmine', 'requirejs'],
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/bower_components/angular-resource/angular-resource.js',
-      'app/bower_components/angular-cookies/angular-cookies.js',
-      'app/bower_components/angular-sanitize/angular-sanitize.js',
-      'app/bower_components/angular-route/angular-route.js',
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
-      'test/client/**/*.js'
+      'test/client/test-bootstrap.js',
+      {
+        pattern: 'app/bower_components/angular/angular.js',
+        included: false
+      },
+      {
+        pattern: 'app/bower_components/angular-mocks/angular-mocks.js',
+        included: false
+      },
+      {
+        pattern: 'app/bower_components/angular-resource/angular-resource.js',
+        included: false
+      },
+      {
+        pattern: 'app/bower_components/angular-cookies/angular-cookies.js',
+        included: false
+      },
+      {
+        pattern: 'app/bower_components/angular-sanitize/angular-sanitize.js',
+        included: false
+      },
+      {
+        pattern: 'app/bower_components/angular-route/angular-route.js',
+        included: false
+      },
+      {
+        pattern: 'app/scripts/*.js',
+        included: false
+      },
+      {
+        pattern: 'app/scripts/**/*.js',
+        included: false
+      },
+      {
+        pattern: 'test/client/**/*.js',
+        included: false
+      },
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+      'app/scripts/bootstrap.js'
+    ],
 
     // web server port
     port: 8080,
@@ -50,6 +82,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: true
   });
 };

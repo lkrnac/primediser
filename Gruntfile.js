@@ -76,7 +76,7 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*//*}*.js',
           '<%= yeoman.app %>/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
         ],
-      
+
         options: {
           livereload: true
         }
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
         options: {
           jshintrc: 'lib/.jshintrc'
         },
-        src: [ 'lib/{,*/}*.js']
+        src: ['lib/{,*/}*.js']
       },
       all: [
         '<%= yeoman.app %>/scripts/{,*/}*.js'
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
             nodemon.on('config:update', function () {
               setTimeout(function () {
                 require('open')('http://localhost:8080/debug?port=5858');
-              }, 500);              
+              }, 500);
             });
           }
         }
@@ -409,6 +409,43 @@ module.exports = function (grunt) {
       test: {
         NODE_ENV: 'test'
       }
+    },
+
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: '<%= yeoman.app %>/scripts',
+          paths: {
+            angular: '../bower_components/angular/angular',
+            angularRoute: '../bower_components/angular-route/angular-route',
+            angularCookies: '../bower_components/angular-cookies/angular-cookies',
+            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
+            angularResource: '../bower_components/angular-resource/angular-resource',
+            angularMocks: '../bower_components/angular-mocks/angular-mocks',
+            text: '../bower_components/requirejs-text/text'
+          },
+          shim: {
+            'angular': {
+              'exports': 'angular'
+            },
+            'angularRoute': ['angular'],
+            'angularCookies': ['angular'],
+            'angularSanitize': ['angular'],
+            'angularResource': ['angular'],
+            'angularMocks': {
+              deps: ['angular'],
+              'exports': 'angular.mock'
+            }
+          },
+          optimize: 'uglify2',
+          uglify2: {
+            mangle: false
+          },
+          include: ['angular'],
+          name: 'bootstrap',
+          out: '<%= yeoman.app %>/scripts/bootstrap-built.js'
+        }
+      }
     }
   });
 
@@ -424,7 +461,7 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
     this.async();
   });
 
@@ -459,7 +496,7 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
 
-  grunt.registerTask('test', function(target) {
+  grunt.registerTask('test', function (target) {
     if (target === 'server') {
       return grunt.task.run([
         'env:test',
@@ -484,7 +521,7 @@ module.exports = function (grunt) {
       'autoprefixer',
       'karma'
     ]);
-  });  
+  });
 
   grunt.registerTask('build', [
     'clean:dist',
@@ -499,7 +536,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'requirejs'
   ]);
 
   grunt.registerTask('heroku', function () {

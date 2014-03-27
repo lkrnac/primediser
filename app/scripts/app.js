@@ -1,20 +1,23 @@
-'use strict';
+define(['angular', 'controllers/main'], function (angular, MainCtrl) {
+  'use strict';
+  return angular.module('generatorAngularFullstack2App', [
+    'generatorAngularFullstack2App.controllers.MainCtrl',
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute'
+  ])
+    .config(function ($routeProvider, $locationProvider) {
+      debugger;
+      $routeProvider
+        .when('/', {
+          templateUrl: 'partials/main',
+          controller: 'MainCtrl'
+        })
+        .otherwise({
+          redirectTo: '/'
+        });
 
-angular.module('generatorAngularFullstack2App', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'ngRoute'
-])
-  .config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'partials/main',
-        controller: 'MainCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-      
-    $locationProvider.html5Mode(true);
-  });
+      $locationProvider.html5Mode(true);
+    });
+});
