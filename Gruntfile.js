@@ -30,13 +30,13 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: 'server.js',
+          script: 'lib/server.js',
           debug: true
         }
       },
       prod: {
         options: {
-          script: 'dist/server.js',
+          script: 'dist/lib/server.js',
           node_env: 'production'
         }
       }
@@ -83,7 +83,6 @@ module.exports = function (grunt) {
       },
       express: {
         files: [
-          'server.js',
           'lib/**/*.{js,json}'
         ],
         tasks: ['newer:jshint:server', 'express:dev', 'wait'],
@@ -140,7 +139,13 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      coverageServer: {
+        src: ['coverage/server/']
+      },
+      coverageClient: {
+        src: ['coverage/client/'],
+      }
     },
 
     // Add vendor prefixed styles
@@ -170,7 +175,7 @@ module.exports = function (grunt) {
     // Use nodemon to run server in debug mode with an initial breakpoint
     nodemon: {
       debug: {
-        script: 'server.js',
+        script: 'lib/server.js',
         options: {
           nodeArgs: ['--debug-brk'],
           env: {
@@ -318,7 +323,6 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             'package.json',
-            'server.js',
             'lib/**/*'
           ]
         }]
@@ -369,24 +373,19 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
 
     // Test settings
     karma: {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
+      }
+    },
+    karmaDebug: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: false,
+        autoWatch: true
       }
     },
 
@@ -397,7 +396,36 @@ module.exports = function (grunt) {
       src: ['test/server/**/*.js']
     },
 
+    // start - code coverage settings
+
+    instrument: {
+      files: ['lib/**/*.js'],
+      options: {
+        lazy: true,
+        basePath: 'coverage/server/instrument/'
+      }
+    },
+
+    storeCoverage: {
+      options: {
+        dir: 'coverage/server/reports'
+      }
+    },
+
+    makeReport: {
+      src: 'coverage/server/reports/**/*.json',
+      options: {
+        type: 'html',
+        dir: 'coverage/server/reports',
+        print: 'detail'
+      }
+    },
+
+    // end - code coverage settings
     env: {
+      coverage: {
+        APP_DIR_FOR_CODE_COVERAGE: '../../coverage/server/instrument/'
+      },
       test: {
         NODE_ENV: 'test'
       }
@@ -435,7 +463,7 @@ module.exports = function (grunt) {
           },
           include: ['angular'],
           name: 'bootstrap',
-          out: '<%= yeoman.app %>/scripts/bootstrap-built.js'
+          out: '<%= yeoman.dist %>/public/scripts/bootstrap-built.js'
         }
       }
     }
@@ -486,11 +514,30 @@ module.exports = function (grunt) {
     grunt.task.run(['serve']);
   });
 
+  grunt.registerTask('coverageServer', [
+    'clean:coverageServer',
+    'env:coverage',
+    'instrument',
+    'mochaTest',
+    'storeCoverage',
+    'makeReport'
+  ]);
+
+  grunt.registerTask('coverageClient', [
+    'clean:coverageClient',
+    'karma'
+  ]);
+
+  grunt.registerTask('coverage', [
+    'coverageServer',
+    'coverageClient'
+  ]);
+  
   grunt.registerTask('test', function (target) {
     if (target === 'server') {
       return grunt.task.run([
         'env:test',
-        'mochaTest'
+        'coverage-server'
       ]);
     }
 
@@ -523,7 +570,6 @@ module.exports = function (grunt) {
     'copy:dist',
     'cdnify',
     'cssmin',
-    'uglify',
     'rev',
     'usemin',
     'requirejs'

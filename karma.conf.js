@@ -82,6 +82,12 @@ module.exports = function (config) {
     preprocessors: {
       'app/scripts/**/*.js': 'coverage'
     },
+    
+    //configure coverage reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/client'
+    },
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
