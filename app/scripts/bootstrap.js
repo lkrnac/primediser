@@ -1,13 +1,13 @@
 /*jshint unused: vars */
 require.config({
   paths: {
-    angular: '../../bower_components/angular/angular',
-    angularRoute: '../../bower_components/angular-route/angular-route',
-    angularCookies: '../../bower_components/angular-cookies/angular-cookies',
-    angularSanitize: '../../bower_components/angular-sanitize/angular-sanitize',
-    angularResource: '../../bower_components/angular-resource/angular-resource',
-    angularMocks: '../../bower_components/angular-mocks/angular-mocks',
-    text: '../../bower_components/requirejs-text/text'
+    angular: '../bower_components/angular/angular',
+    angularRoute: '../bower_components/angular-route/angular-route',
+    angularCookies: '../bower_components/angular-cookies/angular-cookies',
+    angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
+    angularResource: '../bower_components/angular-resource/angular-resource',
+    angularMocks: '../bower_components/angular-mocks/angular-mocks',
+    text: '../bower_components/requirejs-text/text'
   },
   shim: {
     'angular': {

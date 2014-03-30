@@ -432,40 +432,57 @@ module.exports = function (grunt) {
     },
 
     requirejs: {
-      compile: {
+//      compile: {
+//        options: {
+//          baseUrl: '<%= yeoman.app %>/scripts',
+//          paths: {
+//            angular: '../bower_components/angular/angular',
+//            angularRoute: '../bower_components/angular-route/angular-route',
+//            angularCookies: '../bower_components/angular-cookies/angular-cookies',
+//            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
+//            angularResource: '../bower_components/angular-resource/angular-resource',
+//            angularMocks: '../bower_components/angular-mocks/angular-mocks',
+//            text: '../bower_components/requirejs-text/text'
+//          },
+//          shim: {
+//            'angular': {
+//              'exports': 'angular'
+//            },
+//            'angularRoute': ['angular'],
+//            'angularCookies': ['angular'],
+//            'angularSanitize': ['angular'],
+//            'angularResource': ['angular'],
+//            'angularMocks': {
+//              deps: ['angular'],
+//              'exports': 'angular.mock'
+//            }
+//          },
+//          optimize: 'uglify2',
+//          uglify2: {
+//            mangle: false
+//          },
+//          include: ['angular'],
+//          name: 'bootstrap',
+//          out: '<%= yeoman.dist %>/public/scripts/bootstrap.js'
+//        }
+//      }
+      dist: {
         options: {
-          baseUrl: '<%= yeoman.app %>/scripts',
-          paths: {
-            angular: '../bower_components/angular/angular',
-            angularRoute: '../bower_components/angular-route/angular-route',
-            angularCookies: '../bower_components/angular-cookies/angular-cookies',
-            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
-            angularResource: '../bower_components/angular-resource/angular-resource',
-            angularMocks: '../bower_components/angular-mocks/angular-mocks',
-            text: '../bower_components/requirejs-text/text'
-          },
-          shim: {
-            'angular': {
-              'exports': 'angular'
-            },
-            'angularRoute': ['angular'],
-            'angularCookies': ['angular'],
-            'angularSanitize': ['angular'],
-            'angularResource': ['angular'],
-            'angularMocks': {
-              deps: ['angular'],
-              'exports': 'angular.mock'
-            }
-          },
-          optimize: 'uglify2',
-          uglify2: {
-            mangle: false
-          },
-          include: ['angular'],
-          name: 'bootstrap',
-          out: '<%= yeoman.dist %>/public/scripts/bootstrap-built.js'
+            almond: true,
+
+            replaceRequireScript: [{
+                files: ['<%= yeoman.dist %>/views/index.html'],
+                module: 'bootstrap'
+            }],
+
+            modules: [{name: 'bootstrap'}],
+
+            mainConfigFile: '<%= yeoman.app %>/scripts/bootstrap.js', // contains path specifications and nothing else important with respect to config
+            dir: '<%= yeoman.dist %>/public/scripts',
+            baseUrl: '<%= yeoman.app %>/scripts',
+            useStrict: true
         }
-      }
+    }
     }
   });
 
@@ -570,9 +587,9 @@ module.exports = function (grunt) {
     'copy:dist',
     'cdnify',
     'cssmin',
+    'requirejs:dist',
     'rev',
-    'usemin',
-    'requirejs'
+    'usemin'
   ]);
 
   grunt.registerTask('heroku', function () {
