@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
@@ -181,14 +181,14 @@ module.exports = function (grunt) {
           env: {
             PORT: process.env.PORT || 9000
           },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
+          callback: function(nodemon) {
+            nodemon.on('log', function(event) {
               console.log(event.colour);
             });
 
             // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
+            nodemon.on('config:update', function() {
+              setTimeout(function() {
                 require('open')('http://localhost:8080/debug?port=5858');
               }, 500);
             });
@@ -216,7 +216,8 @@ module.exports = function (grunt) {
     // additional tasks can operate on them
     useminPrepare: {
       html: ['<%= yeoman.app %>/views/index.html',
-             '<%= yeoman.app %>/views/index.jade'],
+        '<%= yeoman.app %>/views/index.jade'
+      ],
       options: {
         dest: '<%= yeoman.dist %>/public'
       }
@@ -225,7 +226,8 @@ module.exports = function (grunt) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/views/{,*/}*.html',
-             '<%= yeoman.dist %>/views/{,*/}*.jade'],
+        '<%= yeoman.dist %>/views/{,*/}*.jade'
+      ],
       css: ['<%= yeoman.dist %>/public/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>/public']
@@ -432,78 +434,80 @@ module.exports = function (grunt) {
     },
 
     requirejs: {
-//      compile: {
-//        options: {
-//          baseUrl: '<%= yeoman.app %>/scripts',
-//          paths: {
-//            angular: '../bower_components/angular/angular',
-//            angularRoute: '../bower_components/angular-route/angular-route',
-//            angularCookies: '../bower_components/angular-cookies/angular-cookies',
-//            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
-//            angularResource: '../bower_components/angular-resource/angular-resource',
-//            angularMocks: '../bower_components/angular-mocks/angular-mocks',
-//            text: '../bower_components/requirejs-text/text'
-//          },
-//          shim: {
-//            'angular': {
-//              'exports': 'angular'
-//            },
-//            'angularRoute': ['angular'],
-//            'angularCookies': ['angular'],
-//            'angularSanitize': ['angular'],
-//            'angularResource': ['angular'],
-//            'angularMocks': {
-//              deps: ['angular'],
-//              'exports': 'angular.mock'
-//            }
-//          },
-//          optimize: 'uglify2',
-//          uglify2: {
-//            mangle: false
-//          },
-//          include: ['angular'],
-//          name: 'bootstrap',
-//          out: '<%= yeoman.dist %>/public/scripts/bootstrap.js'
-//        }
-//      }
+      //      compile: {
+      //        options: {
+      //          baseUrl: '<%= yeoman.app %>/scripts',
+      //          paths: {
+      //            angular: '../bower_components/angular/angular',
+      //            angularRoute: '../bower_components/angular-route/angular-route',
+      //            angularCookies: '../bower_components/angular-cookies/angular-cookies',
+      //            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
+      //            angularResource: '../bower_components/angular-resource/angular-resource',
+      //            angularMocks: '../bower_components/angular-mocks/angular-mocks',
+      //            text: '../bower_components/requirejs-text/text'
+      //          },
+      //          shim: {
+      //            'angular': {
+      //              'exports': 'angular'
+      //            },
+      //            'angularRoute': ['angular'],
+      //            'angularCookies': ['angular'],
+      //            'angularSanitize': ['angular'],
+      //            'angularResource': ['angular'],
+      //            'angularMocks': {
+      //              deps: ['angular'],
+      //              'exports': 'angular.mock'
+      //            }
+      //          },
+      //          optimize: 'uglify2',
+      //          uglify2: {
+      //            mangle: false
+      //          },
+      //          include: ['angular'],
+      //          name: 'bootstrap',
+      //          out: '<%= yeoman.dist %>/public/scripts/bootstrap.js'
+      //        }
+      //      }
       dist: {
         options: {
-            almond: true,
+          almond: true,
 
-            replaceRequireScript: [{
-                files: ['<%= yeoman.dist %>/views/index.html'],
-                module: 'bootstrap'
-            }],
+          replaceRequireScript: [{
+            files: ['<%= yeoman.dist %>/views/index.html'],
+            module: 'bootstrap'
+          }],
 
-            modules: [{name: 'bootstrap'}],
+          modules: [{
+            name: 'bootstrap'
+          }],
 
-            mainConfigFile: '<%= yeoman.app %>/scripts/bootstrap.js', // contains path specifications and nothing else important with respect to config
-            dir: '<%= yeoman.dist %>/public/scripts',
-            baseUrl: '<%= yeoman.app %>/scripts',
-            useStrict: true,
-            removeCombined: true
+          mainConfigFile: '<%= yeoman.app %>/scripts/bootstrap.js', // contains path specifications and nothing else important with respect to config
+          dir: '<%= yeoman.dist %>/public/scripts',
+          baseUrl: '<%= yeoman.app %>/scripts',
+          useStrict: true,
+          removeCombined: true
         }
-    }
+      }
     }
   });
 
   // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
+  grunt.registerTask('wait', function() {
     grunt.log.ok('Waiting for server reload...');
 
     var done = this.async();
 
-    setTimeout(function () {
+    setTimeout(function() {
       grunt.log.writeln('Done waiting!');
       done();
     }, 500);
   });
 
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
     this.async();
   });
 
-  grunt.registerTask('serve', function (target) {
+  grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'express:prod', 'open', 'express-keepalive']);
     }
@@ -527,7 +531,7 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', function () {
+  grunt.registerTask('server', function() {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
@@ -550,12 +554,12 @@ module.exports = function (grunt) {
     'coverageServer',
     'coverageClient'
   ]);
-  
-  grunt.registerTask('test', function (target) {
+
+  grunt.registerTask('test', function(target) {
     if (target === 'server') {
       return grunt.task.run([
         'env:test',
-        'coverage-server'
+        'coverageServer'
       ]);
     }
 
@@ -570,7 +574,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'env:test',
-      'mochaTest',
+      'coverageServer',
       'clean:server',
       'concurrent:test',
       'autoprefixer',
@@ -593,7 +597,7 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
-  grunt.registerTask('heroku', function () {
+  grunt.registerTask('heroku', function() {
     grunt.log.warn('The `heroku` task has been deprecated. Use `grunt build` to build for deployment.');
     grunt.task.run(['build']);
   });
