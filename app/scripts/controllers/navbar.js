@@ -1,16 +1,17 @@
-define(['angular'], function (angular) {
+define(['angular'], function(angular) {
   'use strict';
 
-  angular.module('primediser')
+  angular.module('primediser.controllers.NavbarCtrl', [])
     .controller('NavbarCtrl', ['$scope', '$location',
-        function ($scope, $location) {
-      $scope.menu = [{
-        'title': 'Home',
-        'link': '/'
-      }];
+      function($scope, $location) {
+        $scope.menu = [{
+          'title': 'Home',
+          'link': '/'
+        }];
 
-      $scope.isActive = function (route) {
-        return route === $location.path();
-      };
-    }]);
+        $scope.isActive = function(route) {
+          return route === $location.path();
+        };
+      }
+    ]);
 });
