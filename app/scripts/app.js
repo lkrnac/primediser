@@ -1,4 +1,4 @@
-define(['angular', 'controllers/main'], function (angular, MainCtrl) {
+define(['angular', 'controllers/main'], function (angular) {
   'use strict';
   return angular.module('primediser', [
     'primediser.controllers.MainCtrl',
@@ -7,7 +7,8 @@ define(['angular', 'controllers/main'], function (angular, MainCtrl) {
     'ngSanitize',
     'ngRoute'
   ])
-    .config(function ($routeProvider, $locationProvider) {
+    .config(['$routeProvider', '$locationProvider',
+             function ($routeProvider, $locationProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'partials/main',
@@ -18,5 +19,5 @@ define(['angular', 'controllers/main'], function (angular, MainCtrl) {
         });
 
       $locationProvider.html5Mode(true);
-    });
+    }]);
 });

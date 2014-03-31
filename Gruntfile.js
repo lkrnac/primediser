@@ -480,7 +480,8 @@ module.exports = function (grunt) {
             mainConfigFile: '<%= yeoman.app %>/scripts/bootstrap.js', // contains path specifications and nothing else important with respect to config
             dir: '<%= yeoman.dist %>/public/scripts',
             baseUrl: '<%= yeoman.app %>/scripts',
-            useStrict: true
+            useStrict: true,
+            removeCombined: true
         }
     }
     }
