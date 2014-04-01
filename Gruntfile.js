@@ -47,12 +47,19 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      js: {
+      jsClient: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
-        options: {
-          livereload: true
-        }
+        tasks: ['karma:unit'],
+        //        options: {
+        //          livereload: true
+        //        }
+      },
+      jsServer: {
+        files: ['lib/{,*/}*.js'],
+        tasks: ['mochaTest'],
+        //        options: {
+        //          livereload: true
+        //        }
       },
       mochaTest: {
         files: ['test/server/{,*/}*.js'],
@@ -60,7 +67,7 @@ module.exports = function(grunt) {
       },
       jsTest: {
         files: ['test/client/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
+        tasks: ['karma:unit']
       },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -380,11 +387,10 @@ module.exports = function(grunt) {
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
-    karmaDebug: {
-      unit: {
+        singleRun: true,
+        browsers: ['PhantomJS']
+      },
+      debug: {
         configFile: 'karma.conf.js',
         singleRun: false,
         autoWatch: true
@@ -434,40 +440,6 @@ module.exports = function(grunt) {
     },
 
     requirejs: {
-      //      compile: {
-      //        options: {
-      //          baseUrl: '<%= yeoman.app %>/scripts',
-      //          paths: {
-      //            angular: '../bower_components/angular/angular',
-      //            angularRoute: '../bower_components/angular-route/angular-route',
-      //            angularCookies: '../bower_components/angular-cookies/angular-cookies',
-      //            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
-      //            angularResource: '../bower_components/angular-resource/angular-resource',
-      //            angularMocks: '../bower_components/angular-mocks/angular-mocks',
-      //            text: '../bower_components/requirejs-text/text'
-      //          },
-      //          shim: {
-      //            'angular': {
-      //              'exports': 'angular'
-      //            },
-      //            'angularRoute': ['angular'],
-      //            'angularCookies': ['angular'],
-      //            'angularSanitize': ['angular'],
-      //            'angularResource': ['angular'],
-      //            'angularMocks': {
-      //              deps: ['angular'],
-      //              'exports': 'angular.mock'
-      //            }
-      //          },
-      //          optimize: 'uglify2',
-      //          uglify2: {
-      //            mangle: false
-      //          },
-      //          include: ['angular'],
-      //          name: 'bootstrap',
-      //          out: '<%= yeoman.dist %>/public/scripts/bootstrap.js'
-      //        }
-      //      }
       dist: {
         options: {
           almond: true,
