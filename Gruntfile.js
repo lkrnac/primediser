@@ -30,13 +30,13 @@ module.exports = function(grunt) {
       },
       dev: {
         options: {
-          script: 'lib/server.js',
+          script: 'server/server.js',
           debug: true
         }
       },
       prod: {
         options: {
-          script: 'dist/lib/server.js',
+          script: 'dist/server/server.js',
           node_env: 'production'
         }
       }
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         //        }
       },
       jsServer: {
-        files: ['lib/{,*/}*.js'],
+        files: ['server/{,*/}*.js'],
         tasks: ['mochaTest'],
         //        options: {
         //          livereload: true
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
       },
       express: {
         files: [
-          'lib/**/*.{js,json}'
+          'server/**/*.{js,json}'
         ],
         tasks: ['newer:jshint:server', 'express:dev', 'wait'],
         options: {
@@ -108,9 +108,9 @@ module.exports = function(grunt) {
       },
       server: {
         options: {
-          jshintrc: 'lib/.jshintrc'
+          jshintrc: 'server/.jshintrc'
         },
-        src: ['lib/{,*/}*.js']
+        src: ['server/{,*/}*.js']
       },
       all: [
         '<%= yeoman.app %>/scripts/{,*/}*.js'
@@ -182,7 +182,7 @@ module.exports = function(grunt) {
     // Use nodemon to run server in debug mode with an initial breakpoint
     nodemon: {
       debug: {
-        script: 'lib/server.js',
+        script: 'server/server.js',
         options: {
           nodeArgs: ['--debug-brk'],
           env: {
@@ -332,7 +332,7 @@ module.exports = function(grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             'package.json',
-            'lib/**/*'
+            'server/**/*'
           ]
         }]
       },
@@ -407,7 +407,7 @@ module.exports = function(grunt) {
     // start - code coverage settings
 
     instrument: {
-      files: ['lib/**/*.js'],
+      files: ['server/**/*.js'],
       options: {
         lazy: true,
         basePath: 'coverage/server/instrument/'
