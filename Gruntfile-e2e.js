@@ -19,13 +19,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     // Project settings
-    yeoman: {
+    dirs: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'dist',
-      e2e: 'coverage/e2e',
-      instrumentedServer: 'coverage/server/instrument',
-      instrumentedE2E: 'coverage/e2e/instrumented'
+      coverageE2E: 'coverage/e2e',
+      instrumentedE2E: '<%= dirs.coverageE2E %>/instrumented'
     },
     express: {
       options: {
@@ -33,7 +31,7 @@ module.exports = function(grunt) {
       },
       coverageE2E: {
         options: {
-          script: '<%= yeoman.instrumentedE2E %>/lib/server.js',
+          script: '<%= dirs.instrumentedE2E %>/lib/server.js',
           debug: true
         }
       },
@@ -47,7 +45,7 @@ module.exports = function(grunt) {
     // Empties folders to start fresh
     clean: {
       coverageE2E: {
-        src: ['<%= yeoman.e2e %>/'],
+        src: ['<%= dirs.coverageE2E %>/'],
       }
     },
 
@@ -57,8 +55,8 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.e2e %>/instrumented/app',
+          cwd: '<%= dirs.app %>',
+          dest: '<%= dirs.instrumentedE2E %>/app',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -68,12 +66,7 @@ module.exports = function(grunt) {
             'views/**/*',
             'styles/**/*',
           ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.e2e %>/instrumented/app/images',
-          src: ['generated/*']
-        }, ]
+        }]
       },
     },
 
@@ -82,15 +75,15 @@ module.exports = function(grunt) {
       files: ['lib/**/*.js', 'app/scripts/**/*.js'],
       options: {
         lazy: true,
-        basePath: '<%= yeoman.instrumentedE2E %>/'
+        basePath: '<%= dirs.instrumentedE2E %>/'
       }
     },
 
     makeReport: {
-      src: '<%= yeoman.instrumentedE2E %>/*.json',
+      src: '<%= dirs.instrumentedE2E %>/*.json',
       options: {
         type: 'html',
-        dir: '<%= yeoman.e2e %>/reports',
+        dir: '<%= dirs.coverageE2E %>/reports',
         print: 'detail'
         //        type: 'lcov',
         //        dir: 'reports',
@@ -104,7 +97,7 @@ module.exports = function(grunt) {
         configFile: 'test/protractor/protractorConf.js', // Default config file
         keepAlive: true, // If false, the grunt process stops when the test fails.
         noColor: false, // If true, protractor will not use colors in its output.
-        coverageDir: '<%= yeoman.instrumentedE2E %>',
+        coverageDir: '<%= dirs.instrumentedE2E %>',
         args: {}
       },
       phantom: {
