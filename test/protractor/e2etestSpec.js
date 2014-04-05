@@ -1,12 +1,10 @@
-describe('angularjs homepage', function() {
+describe('homepage', function() {
   'use strict';
-  it('should greet the named user', function() {
-    browser.get('http://www.angularjs.org');
+  it('should render title', function() {
+    browser.driver.get('http://localhost:9000');
+    browser.sleep(1000);
 
-    element(by.model('yourName')).sendKeys('Julie');
-
-    var greeting = element(by.binding('yourName'));
-
-    expect(greeting.getText()).toEqual('Hello Julie!');
+    var greeting = browser.driver.findElement(by.className('text-muted'));
+    expect(greeting.getText()).toEqual('primediser');
   });
 });

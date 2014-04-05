@@ -152,9 +152,6 @@ module.exports = function(grunt) {
       },
       coverageClient: {
         src: ['coverage/client/'],
-      },
-      coverageE2E: {
-        src: ['coverage/e2e/'],
       }
     },
 
@@ -463,24 +460,7 @@ module.exports = function(grunt) {
           removeCombined: true
         }
       }
-    },
-
-    //    protractor_coverage: {
-    //      options: {
-    //        configFile: 'node_modules/protractor/referenceConf.js', // Default config file
-    //        keepAlive: true, // If false, the grunt process stops when the test fails.
-    //        noColor: false, // If true, protractor will not use colors in its output.
-    //        args: {
-    //          // Arguments passed to the command
-    //        }
-    //      },
-    //      your_target: {
-    //        options: {
-    //          configFile: 'e2e.conf.js', // Target-specific config file
-    //          args: {} // Target-specific arguments
-    //        }
-    //      },
-    //    },
+    }
   });
 
   // Used for delaying livereload until after server has restarted
@@ -539,7 +519,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('coverageClient', [
     'clean:coverageClient',
-    'karma:unit'
+    'karma'
   ]);
 
   grunt.registerTask('coverage', [
@@ -560,7 +540,7 @@ module.exports = function(grunt) {
         'clean:server',
         'concurrent:test',
         'autoprefixer',
-        'karma:unit'
+        'karma'
       ]);
     }
 
@@ -570,7 +550,7 @@ module.exports = function(grunt) {
       'clean:server',
       'concurrent:test',
       'autoprefixer',
-      'karma:unit'
+      'karma'
     ]);
   });
 
@@ -595,10 +575,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
-    'newer:jshint', +
+    'newer:jshint',
     'test',
     'build'
   ]);
-
-  grunt.registerTask('coverageE2E', ['clean:coverageE2E', 'express:dev', 'karma:unit']);
 };
