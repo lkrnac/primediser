@@ -3,7 +3,7 @@
 var should = require('should'),
   request = require('supertest');
 var requireHelper = require('../requireHelper');
-var app = requireHelper('lib/server');
+var app = requireHelper('server/server');
 
 describe('GET /api/awesomeThings', function() {
   it('should respond with JSON array', function(done) {

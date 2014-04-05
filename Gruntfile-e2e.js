@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 
     // start - code coverage settings
     instrument: {
-      files: ['lib/**/*.js', 'app/scripts/**/*.js'],
+      files: ['server/**/*.js', 'app/scripts/**/*.js'],
       options: {
         lazy: true,
         basePath: '<%= dirs.instrumentedE2E %>/'
