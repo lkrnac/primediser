@@ -31,7 +31,7 @@ module.exports = function(grunt) {
       },
       coverageE2E: {
         options: {
-          script: '<%= dirs.instrumentedE2E %>/lib/server.js',
+          script: '<%= dirs.instrumentedE2E %>/server/server.js',
           debug: true
         }
       },
