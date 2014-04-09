@@ -1,7 +1,7 @@
 // Karma configuration
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 
-module.exports = function (config) {
+module.exports = function(config) {
   'use strict';
   config.set({
     // base path, that will be used to resolve files and exclude
@@ -12,40 +12,31 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/client/test-bootstrap.js',
-      {
+      'test/client/test-bootstrap.js', {
         pattern: 'app/bower_components/angular/angular.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/bower_components/angular-mocks/angular-mocks.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/bower_components/angular-resource/angular-resource.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/bower_components/angular-cookies/angular-cookies.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/bower_components/angular-sanitize/angular-sanitize.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/bower_components/angular-route/angular-route.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/scripts/*.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'app/scripts/**/*.js',
         included: false
-      },
-      {
+      }, {
         pattern: 'test/client/**/*.js',
         included: false
       },
@@ -82,11 +73,11 @@ module.exports = function (config) {
     preprocessors: {
       'app/scripts/**/*.js': 'coverage'
     },
-    
+
     //configure coverage reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/client'
+      type: 'lcov',
+      dir: 'coverage/client'
     },
 
     // Continuous Integration mode

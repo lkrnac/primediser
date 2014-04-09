@@ -423,10 +423,23 @@ module.exports = function(grunt) {
     makeReport: {
       src: 'coverage/server/reports/**/*.json',
       options: {
-        type: 'html',
+        type: 'lcov',
         dir: 'coverage/server/reports',
         print: 'detail'
       }
+    },
+
+    coveralls: {
+      options: {
+        force: true
+      },
+      your_target: {
+        // Target-specific LCOV coverage file
+        src: [
+          'coverage/client/PhantomJS*/lcov.info',
+          'coverage/server/reports/lcov.info'
+        ]
+      },
     },
 
     // end - code coverage settings
@@ -524,7 +537,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('coverage', [
     'coverageServer',
-    'coverageClient'
+    'coverageClient',
+    'coveralls'
   ]);
 
   grunt.registerTask('test', function(target) {
@@ -550,7 +564,8 @@ module.exports = function(grunt) {
       'clean:server',
       'concurrent:test',
       'autoprefixer',
-      'karma:unit'
+      'karma:unit',
+      'coveralls'
     ]);
   });
 
