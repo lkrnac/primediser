@@ -436,8 +436,8 @@ module.exports = function(grunt) {
       your_target: {
         // Target-specific LCOV coverage file
         src: [
-          'coverage/client/PhantomJS*/lcov.info',
-          //'coverage/server/reports/lcov.info'
+          //'coverage/client/PhantomJS*/lcov.info',
+          'coverage/server/reports/lcov.info'
         ]
       },
     },
