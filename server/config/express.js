@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express'),
+    logger = require('morgan'),
     path = require('path'),
     config = require('./config');
 
@@ -8,7 +9,8 @@ var express = require('express'),
  * Express configuration
  */
 module.exports = function(app) {
-  app.configure('development', function(){
+  var env = process.env.NODE_ENV || 'development';
+  if ('development' === env) {
     app.use(require('connect-livereload')());
 
     // Disable caching of scripts for easier testing
@@ -24,27 +26,22 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'app')));
     app.set('views', config.root + '/app/views');
-  });
 
-  app.configure('production', function(){
+    // Error handler
+    app.use(express.errorHandler());
+
+  } else if ('production' === env) {
     app.use(express.favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
     app.set('views', config.root + '/views');
-  });
+  }
 
-  app.configure(function(){
-    app.engine('html', require('ejs').renderFile);
-    app.set('view engine', 'html');
-    app.use(express.logger('dev'));
-    app.use(express.json());
-    app.use(express.urlencoded());
-    app.use(express.methodOverride());
-    // Router (only error handlers should come after this)
-    app.use(app.router);
-  });
-
-  // Error handler
-  app.configure('development', function(){
-    app.use(express.errorHandler());
-  });
+  app.engine('html', require('ejs').renderFile);
+  app.set('view engine', 'html');
+  app.use(require('morgan')('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded());
+  app.use(express.methodOverride());
+  // Router (only error handlers should come after this)
+  app.use(app.router);
 };
