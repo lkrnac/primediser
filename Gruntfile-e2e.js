@@ -81,7 +81,7 @@ module.exports = function(grunt) {
 
     makeReport: {
       src: '<%= dirs.instrumentedE2E %>/*.json',
-      options: {,
+      options: {
         type: 'lcov',
         dir: '<%= dirs.coverageE2E %>/reports',
         print: 'detail'

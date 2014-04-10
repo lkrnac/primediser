@@ -27,7 +27,7 @@ module.exports = function(app) {
     app.set('views', config.root + '/app/views');
 
     // Error handler
-    app.use(express.errorHandler());
+    app.use(require('errorhandler')());
 
   } else if ('production' === env) {
     app.use(express.favicon(path.join(config.root, 'public', 'favicon.ico')));
