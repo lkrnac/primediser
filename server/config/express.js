@@ -1,9 +1,8 @@
 'use strict';
 
 var express = require('express'),
-    logger = require('morgan'),
-    path = require('path'),
-    config = require('./config');
+  path = require('path'),
+  config = require('./config');
 
 /**
  * Express configuration
@@ -39,9 +38,6 @@ module.exports = function(app) {
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.use(require('morgan')('dev'));
-  app.use(express.json());
-  app.use(express.urlencoded());
-  app.use(express.methodOverride());
-  // Router (only error handlers should come after this)
-  app.use(app.router);
+  app.use(require('body-parser')());
+  app.use(require('method-override')());
 };
