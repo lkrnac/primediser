@@ -186,6 +186,11 @@ module.exports = function (grunt) {
     cloneIfMissing('cloneServer');
   });
 
+  grunt.registerTask('buildSubprojects', [
+    'hub:server',
+    'hub:client'
+  ]);
+
   grunt.registerTask('coverage', [
     'cloneSubprojects',
     'clean:coverageE2E',
@@ -199,6 +204,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'cloneSubprojects'
+    'cloneSubprojects',
+    'buildSubprojects'
   ]);
 };
