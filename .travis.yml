@@ -8,5 +8,3 @@ install:
 before_script:
   - 'bower install'
   - 'grunt'
-script:
-  - 'grunt coveralls'
