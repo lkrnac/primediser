@@ -29,8 +29,8 @@
     "should": "^3.3.0",
     "supertest": "^0.10.0",
     "time-grunt": "^0.3.1",
-    "grunt-symlinks": "^1.0.0",
-    "grunt-hub": "^0.6.2"
+    "grunt-hub": "^0.6.2",
+    "grunt-git": "^0.2.7"
   },
   "engines": {
     "node": ">=0.10.0"

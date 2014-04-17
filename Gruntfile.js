@@ -6,6 +6,7 @@
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
+var fs = require('fs');
 
 module.exports = function (grunt) {
 
@@ -73,7 +74,7 @@ module.exports = function (grunt) {
             'images/**/*',
             'fonts/**/*',
             'views/**/*',
-            'styles/**/*',
+            'styles/**/*'
           ]
         }]
       },
@@ -84,7 +85,7 @@ module.exports = function (grunt) {
           cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.client %>',
           dest: '<%= dirs.instrumentedE2E %>',
           src: [
-            '**',
+            '**'
           ]
         }]
       },
@@ -95,13 +96,12 @@ module.exports = function (grunt) {
           cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.server %>',
           dest: '<%= dirs.instrumentedE2E %>',
           src: [
-            '**',
+            '**'
           ]
         }]
-      },
+      }
     },
 
-    // start - code coverage settings
     instrument: {
       files: [
         '<%= dirs.jsServer %>/**/*.js',
@@ -148,17 +148,46 @@ module.exports = function (grunt) {
 
     hub: {
       client: {
-        src: ['primediser-client/Gruntfile.js'],
+        src: ['<%= dirs.client %>/Gruntfile.js'],
         tasks: ['default'],
       },
       server: {
-        src: ['primediser-server/Gruntfile.js'],
+        src: ['<%= dirs.server %>/Gruntfile.js'],
         tasks: ['default'],
+      },
+    },
+
+    gitclone: {
+      cloneServer: {
+        options: {
+          repository: 'https://github.com/lkrnac/<%= dirs.server %>',
+          directory: '<%= dirs.server %>'
+        },
+      },
+      cloneClient: {
+        options: {
+          repository: 'https://github.com/lkrnac/<%= dirs.client %>',
+          directory: '<%= dirs.client %>'
+        },
       },
     },
   });
 
-  grunt.registerTask('default', [
+  var cloneIfMissing = function (subTask) {
+    var directory = grunt.config.get('gitclone')[subTask].options.directory;
+    var exists = fs.existsSync(directory);
+    if (!exists) {
+      grunt.task.run('gitclone:' + subTask);
+    }
+  };
+
+  grunt.registerTask('cloneSubprojects', function () {
+    cloneIfMissing('cloneClient');
+    cloneIfMissing('cloneServer');
+  });
+
+  grunt.registerTask('coverage', [
+    'cloneSubprojects',
     'clean:coverageE2E',
     'copy:coverageStatic',
     'instrument',
@@ -167,5 +196,9 @@ module.exports = function (grunt) {
     'express:coverageE2E',
     'protractor_coverage:chrome',
     'makeReport'
+  ]);
+
+  grunt.registerTask('default', [
+    'cloneSubprojects'
   ]);
 };
