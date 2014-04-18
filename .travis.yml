@@ -5,6 +5,11 @@ before_install:
   - 'npm install -g grunt-cli bower'
 install:
   - 'npm install'
+  - 'cd primediser-server'
+  - 'npm install'
+  - 'cd ../primediser-client'
+  - 'npm install'
+  - 'cd ..'
 before_script:
   - 'bower install'
   - 'grunt'
