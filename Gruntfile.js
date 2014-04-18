@@ -188,6 +188,20 @@ module.exports = function (grunt) {
       },
     },
 
+    shell: {
+      npmInstallServer: {
+        options: {
+          stdout: true
+        },
+        command: 'cd <%= dirs.server %> && npm install && cd ..'
+      },
+      npmInstallClient: {
+        options: {
+          stdout: true
+        },
+        command: 'cd <%= dirs.client %> && npm install && bower install && cd ..'
+      }
+    },
     gitclone: {
       cloneServer: {
         options: {
@@ -217,6 +231,11 @@ module.exports = function (grunt) {
     cloneIfMissing('cloneServer');
   });
 
+  grunt.registerTask('npmInstallSubprojects', [
+    'shell:npmInstallServer',
+    'shell:npmInstallClient'
+  ]);
+
   grunt.registerTask('buildSubprojects', [
     'hub:server',
     'hub:client'
@@ -236,6 +255,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'cloneSubprojects',
+    'npmInstallSubprojects',
     'buildSubprojects',
     'copy:distServer',
     'copy:distClient',
