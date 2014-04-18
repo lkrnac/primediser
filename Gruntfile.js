@@ -22,6 +22,7 @@ module.exports = function (grunt) {
     // Project settings
     dirs: {
       // configurable paths
+      dist: 'dist',
 
       //child projects
       server: 'primediser-server',
@@ -29,6 +30,8 @@ module.exports = function (grunt) {
       srcClient: '<%= dirs.client %>/app',
       jsServer: '<%= dirs.server %>/src',
       jsClient: '<%= dirs.srcClient %>/scripts',
+      distServer: '<%= dirs.server %>/dist',
+      distClient: '<%= dirs.client %>/dist',
 
       //coverage related paths
       coverageE2E: 'coverage/e2e',
@@ -45,6 +48,12 @@ module.exports = function (grunt) {
           debug: true
         }
       },
+      prod: {
+        options: {
+          script: 'dist/src/server.js',
+          node_env: 'production'
+        }
+      }
     },
     open: {
       server: {
@@ -95,6 +104,28 @@ module.exports = function (grunt) {
           dot: true,
           cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.server %>',
           dest: '<%= dirs.instrumentedE2E %>',
+          src: [
+            '**'
+          ]
+        }]
+      },
+      distServer: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= dirs.distServer %>',
+          dest: '<%= dirs.dist %>',
+          src: [
+            '**'
+          ]
+        }]
+      },
+      distClient: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= dirs.distClient %>',
+          dest: '<%= dirs.dist %>',
           src: [
             '**'
           ]
@@ -205,6 +236,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'cloneSubprojects',
-    'buildSubprojects'
+    'buildSubprojects',
+    'copy:distServer',
+    'copy:distClient',
+    'express:prod'
   ]);
 };
