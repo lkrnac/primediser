@@ -180,24 +180,26 @@ module.exports = function (grunt) {
     hub: {
       client: {
         src: ['<%= dirs.client %>/Gruntfile.js'],
-        tasks: ['default'],
+        tasks: ['build'],
       },
       server: {
         src: ['<%= dirs.server %>/Gruntfile.js'],
-        tasks: ['default'],
+        tasks: ['build'],
       },
     },
 
     shell: {
       npmInstallServer: {
         options: {
-          stdout: true
+          stdout: true,
+          stderr: true
         },
         command: 'cd <%= dirs.server %> && npm install && cd ..'
       },
       npmInstallClient: {
         options: {
-          stdout: true
+          stdout: true,
+          stderr: true
         },
         command: 'cd <%= dirs.client %> && npm install && bower install && cd ..'
       }
