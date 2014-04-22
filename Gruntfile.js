@@ -44,13 +44,13 @@ module.exports = function (grunt) {
       },
       coverageE2E: {
         options: {
-          script: '<%= dirs.instrumentedE2E %>/src/server.js',
+          script: '<%= dirs.instrumentedE2E %>/server.js',
           debug: true
         }
       },
       prod: {
         options: {
-          script: 'dist/src/server.js',
+          script: '<%= dirs.dist %>/server.js',
           node_env: 'production'
         }
       }
@@ -65,6 +65,9 @@ module.exports = function (grunt) {
     clean: {
       coverageE2E: {
         src: ['<%= dirs.coverageE2E %>/'],
+      },
+      dist: {
+        src: ['<%= dirs.dist %>/'],
       }
     },
 
@@ -257,6 +260,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'cloneSubprojects',
+    'clean:dist',
     'npmInstallSubprojects',
     'buildSubprojects',
     'copy:distServer',
