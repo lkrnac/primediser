@@ -197,14 +197,14 @@ module.exports = function (grunt) {
           stdout: true,
           stderr: true
         },
-        command: 'cd <%= dirs.server %> && time npm install && cd ..'
+        command: 'cd <%= dirs.server %> && npm install && cd ..'
       },
       npmInstallClient: {
         options: {
           stdout: true,
           stderr: true
         },
-        command: 'cd <%= dirs.client %> && time npm install && bower install && cd ..'
+        command: 'cd <%= dirs.client %> && npm install && bower install && cd ..'
       }
     },
     gitclone: {
