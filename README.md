@@ -1,7 +1,6 @@
 primediser
 ==========
-[![Build Status](https://travis-ci.org/lkrnac/primediser.svg)](https://travis-ci.org/lkrnac/primediser)
-[![Coverage Status](http://img.shields.io/coveralls/lkrnac/primediser.svg)](https://coveralls.io/r/lkrnac/primediser?branch=master)
+[![Build Status](https://drone.io/github.com/lkrnac/primediser/status.png)](https://drone.io/github.com/lkrnac/primediser/latest)
 [![Dependency Status](https://david-dm.org/lkrnac/primediser.svg?theme=shields.io)](https://david-dm.org/lkrnac/primediser)
 [![devDependency Status](https://david-dm.org/lkrnac/primediser/dev-status.svg?theme=shields.io)](https://david-dm.org/lkrnac/primediser#info=devDependencies)
 
