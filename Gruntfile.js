@@ -265,6 +265,6 @@ module.exports = function (grunt) {
     'buildSubprojects',
     'copy:distServer',
     'copy:distClient',
-    'express:prod'
+    //'express:prod'
   ]);
 };
