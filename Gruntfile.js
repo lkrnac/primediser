@@ -44,13 +44,13 @@ module.exports = function (grunt) {
       },
       coverageE2E: {
         options: {
-          script: '<%= dirs.instrumentedE2E %>/server.js',
+          script: '<%= dirs.instrumentedE2E %>/server/server.js',
           debug: true
         }
       },
       prod: {
         options: {
-          script: '<%= dirs.dist %>/server.js',
+          script: '<%= dirs.dist %>/server/server.js',
           node_env: 'production'
         }
       }
@@ -105,8 +105,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.server %>',
-          dest: '<%= dirs.instrumentedE2E %>',
+          cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.jsServer %>',
+          dest: '<%= dirs.instrumentedE2E %>/server',
           src: [
             '**'
           ]
@@ -221,6 +221,11 @@ module.exports = function (grunt) {
         },
       },
     },
+    watch: {
+      gruntfile: {
+        files: ['Gruntfile.js']
+      }
+    }
   });
 
   var cloneIfMissing = function (subTask) {
@@ -247,7 +252,6 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('coverage', [
-    'cloneSubprojects',
     'clean:coverageE2E',
     'copy:coverageStatic',
     'instrument',
@@ -258,13 +262,26 @@ module.exports = function (grunt) {
     'makeReport'
   ]);
 
-  grunt.registerTask('default', [
+  grunt.registerTask('buildDist', [
     'cloneSubprojects',
-    'clean:dist',
     'npmInstallSubprojects',
     'buildSubprojects',
+    'clean:dist',
     'copy:distServer',
     'copy:distClient',
-    'express:prod'
+  ]);
+
+  grunt.registerTask('startDist', [
+    'buildDist',
+    'express:prod',
+    'watch'
+  ]);
+
+  grunt.registerTask('default', [
+    'cloneSubprojects',
+    'npmInstallSubprojects',
+    'buildSubprojects',
+    //'build',
+    'coverage'
   ]);
 };
