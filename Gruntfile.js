@@ -259,7 +259,8 @@ module.exports = function (grunt) {
     'copy:coverageJsClient',
     'express:coverageE2E',
     'protractor_coverage:chrome',
-    'makeReport'
+    'makeReport',
+    'express:coverageE2E:stop'
   ]);
 
   grunt.registerTask('buildDist', [
@@ -274,7 +275,8 @@ module.exports = function (grunt) {
   grunt.registerTask('startDist', [
     'buildDist',
     'express:prod',
-    'watch'
+    'watch',
+    'express:prod:stop',
   ]);
 
   grunt.registerTask('default', [
