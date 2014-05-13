@@ -27,11 +27,11 @@
     "grunt-open": "^0.2.0",
     "grunt-protractor-coverage": "^0.2.2",
     "grunt-rev": "^0.1.0",
-    "grunt-shell": "^0.6.4",
+    "grunt-shell": "^0.7.0",
     "load-grunt-tasks": "^0.4.0",
     "open": "^0.0.5",
     "should": "^3.3.0",
-    "supertest": "^0.10.0",
+    "supertest": "^0.12.1",
     "time-grunt": "^0.3.1"
   },
   "engines": {
