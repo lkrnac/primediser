@@ -14,37 +14,37 @@ exports.config = {
   // and chromeDriver will be used directly (from the location specified in
   // chromeDriver)
 
-  // The location of the selenium standalone server .jar file, relative
-  // to the location of this config. If no other method of starting selenium
-  // is found, this will default to protractor/selenium/selenium-server...
-  seleniumServerJar: null, //'./selenium/selenium-server-standalone-2.37.0.jar',
-  // The port to start the selenium server on, or null if the server should
-  // find its own unused port.
-  seleniumPort: 3010, //3010,
-  // Chromedriver location is used to help the selenium standalone server
-  // find chromedriver. This will be passed to the selenium jar as
-  // the system property webdriver.chrome.driver. If null, selenium will
-  // attempt to find chromedriver using PATH.
-  chromeDriver: './selenium/chromedriver',
-  // If true, only chromedriver will be started, not a standalone selenium.
-  // Tests for browsers other than chrome will not run.
-  chromeOnly: false,
-  // Additional command line options to pass to selenium. For example,
-  // if you need to change the browser timeout, use
-  // seleniumArgs: ['-browserTimeout=60'],
-  seleniumArgs: [],
-
-  // The address of a running selenium server. If specified, Protractor will
-  // connect to an already running instance of selenium. This usually looks like
-  // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
-  // The tests will be run remotely using SauceLabs.
-  // sauceUser: 'safeldm',
-  // sauceKey: 'a3388a50-0ddb-4f90-8f81-4baa5bc839e1',
-  // The timeout for each script run on the browser. This should be longer
-  // than the maximum time your application needs to stabilize between tasks.
-  allScriptsTimeout: 30000,
+//  // The location of the selenium standalone server .jar file, relative
+//  // to the location of this config. If no other method of starting selenium
+//  // is found, this will default to protractor/selenium/selenium-server...
+//  seleniumServerJar: null, //'./selenium/selenium-server-standalone-2.37.0.jar',
+//  // The port to start the selenium server on, or null if the server should
+//  // find its own unused port.
+//  seleniumPort: 3010, //3010,
+//  // Chromedriver location is used to help the selenium standalone server
+//  // find chromedriver. This will be passed to the selenium jar as
+//  // the system property webdriver.chrome.driver. If null, selenium will
+//  // attempt to find chromedriver using PATH.
+//  chromeDriver: './selenium/chromedriver',
+//  // If true, only chromedriver will be started, not a standalone selenium.
+//  // Tests for browsers other than chrome will not run.
+//  chromeOnly: false,
+//  // Additional command line options to pass to selenium. For example,
+//  // if you need to change the browser timeout, use
+//  // seleniumArgs: ['-browserTimeout=60'],
+//  seleniumArgs: [],
+//
+//  // The address of a running selenium server. If specified, Protractor will
+//  // connect to an already running instance of selenium. This usually looks like
+//  // seleniumAddress: 'http://localhost:4444/wd/hub'
+//  seleniumAddress: 'http://localhost:4444/wd/hub',
+//  // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
+//  // The tests will be run remotely using SauceLabs.
+//  // sauceUser: 'safeldm',
+//  // sauceKey: 'a3388a50-0ddb-4f90-8f81-4baa5bc839e1',
+//  // The timeout for each script run on the browser. This should be longer
+//  // than the maximum time your application needs to stabilize between tasks.
+//  allScriptsTimeout: 30000,
 
   // ----- What tests to run -----
   //
@@ -82,5 +82,9 @@ exports.config = {
     includeStackTrace: true,
     defaultTimeoutInterval: 90000
 
-  }
+  },
+  
+  // An example configuration file.
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY
 };

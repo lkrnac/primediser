@@ -258,7 +258,7 @@ module.exports = function (grunt) {
     'copy:coverageJsServer',
     'copy:coverageJsClient',
     'express:coverageE2E',
-    'protractor_coverage:phantom',
+    'protractor_coverage:chrome',
     'makeReport',
     'express:coverageE2E:stop'
   ]);
