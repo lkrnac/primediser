@@ -37,6 +37,7 @@ module.exports = function (grunt) {
       coverageE2E: 'coverage/e2e',
       instrumentedE2E: '<%= dirs.coverageE2E %>/instrumented',
       instrumentedE2Etmp: '<%= dirs.coverageE2E %>/tmp',
+      coverageReportsE2E: '<%= dirs.coverageE2E %>/reports',
     },
     express: {
       options: {
@@ -151,11 +152,12 @@ module.exports = function (grunt) {
       src: '<%= dirs.instrumentedE2E %>/*.json',
       options: {
         type: 'lcov',
-        dir: '<%= dirs.coverageE2E %>/reports',
+        dir: '<%= dirs.coverageReportsE2E %>',
         print: 'detail'
       }
     },
 
+    //measure client side code coverage by protractor end-to-end tests
     protractor_coverage: {
       options: {
         configFile: 'test/protractor/protractorConf.js',
@@ -177,6 +179,16 @@ module.exports = function (grunt) {
             'browser': 'chrome'
           }
         }
+      },
+    },
+    
+    //send code coverage stats to coveralls.io server
+    coveralls: {
+      options: {
+        force: true
+      },
+      server: {
+        src: '<%= dirs.coverageReportsE2E %>/lcov.info'
       },
     },
 
@@ -260,7 +272,8 @@ module.exports = function (grunt) {
     'express:coverageE2E',
     'protractor_coverage:chrome',
     'makeReport',
-    'express:coverageE2E:stop'
+    'express:coverageE2E:stop',
+    'coveralls'
   ]);
 
   grunt.registerTask('buildDist', [
