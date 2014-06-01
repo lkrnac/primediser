@@ -187,7 +187,7 @@ module.exports = function (grunt) {
       options: {
         force: true
       },
-      server: {
+      client: {
         src: '<%= dirs.coverageReportsE2E %>/lcov.info'
       },
     },
