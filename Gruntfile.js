@@ -54,6 +54,12 @@ module.exports = function (grunt) {
           script: '<%= dirs.dist %>/server/server.js',
           node_env: 'production'
         }
+      },
+      devel: {
+        options: {
+          script: '<%= dirs.jsServer %>/server.js',
+          node_env: 'development'
+        }
       }
     },
     open: {
@@ -181,7 +187,7 @@ module.exports = function (grunt) {
         }
       },
     },
-    
+
     //send code coverage stats to coveralls.io server
     coveralls: {
       options: {
@@ -290,6 +296,13 @@ module.exports = function (grunt) {
     'express:prod',
     'watch',
     'express:prod:stop',
+  ]);
+
+  grunt.registerTask('startDevel', [
+    'express:devel',
+    'open',
+    'watch',
+    'express:devel:stop',
   ]);
 
   grunt.registerTask('default', [
