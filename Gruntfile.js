@@ -39,6 +39,7 @@ module.exports = function (grunt) {
       instrumentedE2Etmp: '<%= dirs.coverageE2E %>/tmp',
       coverageReportsE2E: '<%= dirs.coverageE2E %>/reports',
     },
+
     express: {
       options: {
         port: process.env.PORT || 9000
@@ -55,13 +56,14 @@ module.exports = function (grunt) {
           node_env: 'production'
         }
       },
-      devel: {
+      dev: {
         options: {
           script: '<%= dirs.jsServer %>/server.js',
           node_env: 'development'
         }
       }
     },
+
     open: {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
@@ -225,6 +227,7 @@ module.exports = function (grunt) {
         command: 'cd <%= dirs.client %> && npm install && bower install && cd ..'
       }
     },
+
     gitclone: {
       cloneServer: {
         options: {
@@ -239,11 +242,32 @@ module.exports = function (grunt) {
         },
       },
     },
+
     watch: {
       gruntfile: {
         files: ['Gruntfile.js']
+      },
+      express: {
+        files: ['<%= dirs.jsServer %>/**/*.{js,json}'],
+        tasks: ['express:dev', 'wait'],
+        options: {
+          livereload: true,
+          nospawn: true //Without this option specified express won't be reloaded
+        }
       }
     }
+  });
+
+  // Used for delaying livereload until after server has restarted
+  grunt.registerTask('wait', function () {
+    grunt.log.ok('Waiting for server reload...');
+
+    var done = this.async();
+
+    setTimeout(function () {
+      grunt.log.writeln('Done waiting!');
+      done();
+    }, 500);
   });
 
   var cloneIfMissing = function (subTask) {
@@ -299,10 +323,10 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('startDevel', [
-    'express:devel',
+    'express:dev',
     'open',
     'watch',
-    'express:devel:stop',
+    'express:dev:stop',
   ]);
 
   grunt.registerTask('default', [
