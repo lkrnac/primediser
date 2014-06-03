@@ -1,4 +1,6 @@
 // Generated on 2014-03-24 using generator-angular-fullstack 1.3.2
+
+// jshint node: true
 'use strict';
 
 // # Globbing
@@ -230,7 +232,8 @@ module.exports = function (grunt) {
           stdout: true,
           stderr: true
         },
-        command: 'cd <%= dirs.client %> && npm install && bower install && cd ..'
+        command: 'cd <%= dirs.client %> && npm install && ' +
+          'bower install && cd ..'
       }
     },
 
@@ -258,7 +261,8 @@ module.exports = function (grunt) {
         tasks: ['express:dev', 'wait'],
         options: {
           livereload: true,
-          nospawn: true //Without this option specified express won't be reloaded
+          //Without this option specified express won't be reloaded
+          nospawn: true
         }
       }
     },
