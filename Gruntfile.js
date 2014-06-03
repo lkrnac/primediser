@@ -54,7 +54,7 @@ module.exports = function (grunt) {
       },
       coverageE2E: {
         options: {
-          script: '<%= dirs.instrumentedE2E %>/server/server.js',
+          script: '<%= dirs.instrumentedE2E %>/<%= dirs.jsServer %>/server.js',
           debug: true
         }
       },
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.srcClient %>',
-          dest: '<%= dirs.instrumentedE2E %>/app',
+          dest: '<%= dirs.instrumentedE2E %>/<%= dirs.client %>/app',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.client %>',
-          dest: '<%= dirs.instrumentedE2E %>',
+          dest: '<%= dirs.instrumentedE2E %>/<%= dirs.client %>',
           src: [
             '**'
           ]
@@ -123,7 +123,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.jsServer %>',
-          dest: '<%= dirs.instrumentedE2E %>/server',
+          dest: '<%= dirs.instrumentedE2E %>/<%= dirs.jsServer %>',
           src: [
             '**'
           ]
