@@ -8,6 +8,8 @@
 // 'test/spec/**/*.js'
 var fs = require('fs');
 
+//jshint camelcase: false
+//some Grunt plugins use underscore in their API
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -33,6 +35,9 @@ module.exports = function (grunt) {
       distServer: '<%= dirs.server %>/dist',
       distClient: '<%= dirs.client %>/dist',
 
+      //test related directories
+      test: 'test',
+
       //coverage related paths
       coverageE2E: 'coverage/e2e',
       instrumentedE2E: '<%= dirs.coverageE2E %>/instrumented',
@@ -40,6 +45,7 @@ module.exports = function (grunt) {
       coverageReportsE2E: '<%= dirs.coverageE2E %>/reports',
     },
 
+    //jshint camelcase: false
     express: {
       options: {
         port: process.env.PORT || 9000
@@ -168,7 +174,7 @@ module.exports = function (grunt) {
     //measure client side code coverage by protractor end-to-end tests
     protractor_coverage: {
       options: {
-        configFile: 'test/protractor/protractorConf.js',
+        configFile: '<%= dirs.test %>/protractor/protractorConf.js',
         coverageDir: '<%= dirs.instrumentedE2E %>',
         args: {}
       },
@@ -255,7 +261,18 @@ module.exports = function (grunt) {
           nospawn: true //Without this option specified express won't be reloaded
         }
       }
-    }
+    },
+
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc',
+        reporter: require('jshint-stylish'),
+      },
+      all: [
+        '<%= dirs.test %>/**/*.js'
+      ],
+    },
+
   });
 
   // Used for delaying livereload until after server has restarted
@@ -322,14 +339,15 @@ module.exports = function (grunt) {
     'express:prod:stop',
   ]);
 
-  grunt.registerTask('startDevel', [
+  grunt.registerTask('startDev', [
     'express:dev',
-    'open',
+    //'open',
     'watch',
     'express:dev:stop',
   ]);
 
   grunt.registerTask('default', [
+    'newer:jshint',
     'cloneSubprojects',
     'npmInstallSubprojects',
     'buildSubprojects',
