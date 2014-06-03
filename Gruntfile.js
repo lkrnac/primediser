@@ -178,6 +178,7 @@ module.exports = function (grunt) {
       options: {
         configFile: '<%= dirs.test %>/protractor/protractorConf.js',
         coverageDir: '<%= dirs.instrumentedE2E %>',
+        keepAlive: false,
         args: {}
       },
       phantom: {
