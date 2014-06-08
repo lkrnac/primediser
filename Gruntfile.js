@@ -86,10 +86,10 @@ module.exports = function (grunt) {
     // Empties folders to start fresh
     clean: {
       coverageE2E: {
-        src: ['<%= dirs.coverageE2E %>/'],
+        src: ['<%= dirs.coverageE2E %>'],
       },
       dist: {
-        src: ['<%= dirs.dist %>/'],
+        src: ['<%= dirs.dist %>'],
       }
     },
 
