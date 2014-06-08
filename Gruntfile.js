@@ -41,16 +41,21 @@ module.exports = function (grunt) {
       test: 'test',
 
       //coverage related paths
-      coverageE2E: 'coverage/e2e',
+      coverageE2E: 'coverage',
       instrumentedE2E: '<%= dirs.coverageE2E %>/instrumented',
       instrumentedE2Etmp: '<%= dirs.coverageE2E %>/tmp',
       coverageReportsE2E: '<%= dirs.coverageE2E %>/reports',
+      instrumentedClientPath: '<%= dirs.instrumentedE2E %>/' +
+        '<%= dirs.srcClient %>'
     },
 
     //jshint camelcase: false
     express: {
       options: {
-        port: process.env.PORT || 9000
+        port: process.env.PORT || 9000,
+        fallback: function (error) {
+          console.log('lalaho error' + error);
+        }
       },
       coverageE2E: {
         options: {
@@ -60,7 +65,7 @@ module.exports = function (grunt) {
       },
       prod: {
         options: {
-          script: '<%= dirs.dist %>/server/server.js',
+          script: '<%= dirs.dist %>/<%= dirs.jsServer %>/server.js',
           node_env: 'production'
         }
       },
@@ -95,7 +100,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.srcClient %>',
-          dest: '<%= dirs.instrumentedE2E %>/<%= dirs.client %>/app',
+          dest: '<%= dirs.instrumentedClientPath %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -111,8 +116,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.client %>',
-          dest: '<%= dirs.instrumentedE2E %>/<%= dirs.client %>',
+          cwd: '<%= dirs.instrumentedE2Etmp %>/<%= dirs.srcClient %>',
+          dest: '<%= dirs.instrumentedClientPath %>',
           src: [
             '**'
           ]
@@ -134,7 +139,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.distServer %>',
-          dest: '<%= dirs.dist %>',
+          dest: '<%= dirs.dist %>/<%= dirs.server %>',
           src: [
             '**'
           ]
@@ -145,7 +150,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= dirs.distClient %>',
-          dest: '<%= dirs.dist %>',
+          dest: '<%= dirs.dist %>/<%= dirs.client %>',
           src: [
             '**'
           ]
@@ -173,13 +178,24 @@ module.exports = function (grunt) {
       }
     },
 
+    env: {
+      coverageClientPath: {
+        PRIMEDISER_CLIENT_PATH: '<%= dirs.instrumentedClientPath %>'
+      },
+      devClientPath: {
+        PRIMEDISER_CLIENT_PATH: '<%= dirs.srcClient %>'
+      },
+      distClientPath: {
+        PRIMEDISER_CLIENT_PATH: '<%= dirs.dist %>/<%= dirs.srcClient %>'
+      }
+    },
+
     //measure client side code coverage by protractor end-to-end tests
     protractor_coverage: {
       options: {
         configFile: '<%= dirs.test %>/protractor/protractorConf.js',
         coverageDir: '<%= dirs.instrumentedE2E %>',
-        keepAlive: false,
-        args: {}
+        keepAlive: false
       },
       phantom: {
         options: {
@@ -321,6 +337,7 @@ module.exports = function (grunt) {
     'instrument',
     'copy:coverageJsServer',
     'copy:coverageJsClient',
+    'env:coverageClientPath',
     'express:coverageE2E',
     'protractor_coverage:chrome',
     'makeReport',
@@ -339,12 +356,14 @@ module.exports = function (grunt) {
 
   grunt.registerTask('startDist', [
     'buildDist',
+    'env:distClientPath',
     'express:prod',
     'watch',
     'express:prod:stop',
   ]);
 
   grunt.registerTask('startDev', [
+    'env:devClientPath',
     'express:dev',
     //'open',
     'watch',
