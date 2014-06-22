@@ -33,6 +33,7 @@ module.exports = function (grunt) {
       client: 'primediser-client',
       srcClient: '<%= dirs.client %>/app',
       jsServer: '<%= dirs.server %>/src',
+      testServer: '<%= dirs.server %>/test',
       jsClient: '<%= dirs.srcClient %>/scripts',
       distServer: '<%= dirs.server %>/dist',
       distClient: '<%= dirs.client %>/dist',
@@ -234,6 +235,10 @@ module.exports = function (grunt) {
         src: ['<%= dirs.server %>/Gruntfile.js'],
         tasks: ['build'],
       },
+      serverTests: {
+        src: ['<%= dirs.server %>/Gruntfile.js'],
+        tasks: ['test'],
+      }
     },
 
     shell: {
@@ -275,12 +280,17 @@ module.exports = function (grunt) {
       },
       express: {
         files: ['<%= dirs.jsServer %>/**/*.{js,json}'],
-        tasks: ['express:dev', 'wait'],
+        tasks: ['env:devClientPath','express:dev', 'wait'],
         options: {
           livereload: true,
           //Without this option specified express won't be reloaded
           nospawn: true
         }
+      },
+      serverTests:{
+        files: ['<%= dirs.jsServer %>/**/*.{js,json}',
+                '<%= dirs.testServer %>/**/*.{js,json}'],
+        tasks: ['hub:serverTests']
       }
     },
 

@@ -7,6 +7,7 @@ heroku
 /views
 dist
 /coverage/
-/node_modules.bckp/
 /start-sc.sh
 /nbproject/private/
+/primediser-client/
+/primediser-server/
