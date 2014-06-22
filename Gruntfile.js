@@ -237,7 +237,7 @@ module.exports = function (grunt) {
       },
       serverTests: {
         src: ['<%= dirs.server %>/Gruntfile.js'],
-        tasks: ['test'],
+        tasks: ['mochaTest'],
       }
     },
 
