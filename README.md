@@ -1,3 +1,6 @@
+This project is discontinued
+==========
+
 primediser
 ==========
 [![Build Status](https://drone.io/github.com/lkrnac/primediser/status.png)](https://drone.io/github.com/lkrnac/primediser/latest)
